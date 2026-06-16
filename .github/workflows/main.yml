@@ -1,0 +1,36 @@
+name: Market Scraper Automation
+
+on:
+  schedule:
+    # বাংলাদেশ সময় সকাল ১১:০০ (UTC ০৫:০০) – রবি থেকে বৃহস্পতি
+    - cron: '0 5 * * 0-4'
+    # বাংলাদেশ সময় বিকাল ০৩:০০ (UTC ০৯:০০) – রবি থেকে বৃহস্পতি
+    - cron: '0 9 * * 0-4'
+  workflow_dispatch: # ম্যানুয়াল রান
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run CSE Scraper
+        env:
+          FIREBASE_SERVICE_ACCOUNT_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
+        run: node scraper.js
+
+      - name: Run DSE Scraper
+        env:
+          FIREBASE_SERVICE_ACCOUNT_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
+        run: node dse_scraper.js
