@@ -1,0 +1,19 @@
+{
+  "name": "market-scraper",
+  "version": "1.0.0",
+  "description": "CSE & DSE Market Data Scraper with Firebase Integration",
+  "main": "scraper.js",
+  "scripts": {
+    "start": "node scraper.js",
+    "scrape:cse": "node scraper.js",
+    "scrape:dse": "node dse_scraper.js",
+    "scrape:all": "node scraper.js && node dse_scraper.js"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "cheerio": "^1.0.0-rc.12",
+    "firebase-admin": "^11.11.0"
+  },
+  "author": "Your Name",
+  "license": "ISC"
+}
